@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.2](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/compare/v1.3.1...v1.3.2) (2026-07-04)
+
+
+### Bug Fixes
+
+* update WebSocket gateway CORS to allow correct domains ([9966350](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/commit/9966350f243daa663768bec988e1961a0b2879b2))
+* update WebSocket gateway CORS to allow correct domains ([cd6dba0](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/commit/cd6dba0e4fafe337c9e21fdb68a112c9eb86be84))
+
 ## [1.3.1](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/compare/v1.3.0...v1.3.1) (2026-07-04)
 
 
