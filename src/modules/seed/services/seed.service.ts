@@ -1,7 +1,7 @@
 import { Command } from 'nestjs-command';
 import { ConflictException, Injectable } from '@nestjs/common';
 import { UsersService } from '../../users/services/users.service';
-import { CategoriesService } from '../../categories/services/categories.service';
+// import { CategoriesService } from '../../categories/services/categories.service';
 import { BranchesService } from '../../branches/services/branches.service';
 import { UserRole } from '../../../common/enums';
 
@@ -9,7 +9,7 @@ import { UserRole } from '../../../common/enums';
 export class SeedService {
   constructor(
     private readonly usersService: UsersService,
-    private readonly categoriesService: CategoriesService,
+    // private readonly categoriesService: CategoriesService,
     private readonly branchesService: BranchesService,
   ) {}
 
