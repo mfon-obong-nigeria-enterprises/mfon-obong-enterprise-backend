@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.3](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/compare/v1.3.2...v1.3.3) (2026-07-04)
+
+
+### Bug Fixes
+
+* cast caught errors to Error type in websocket gateway ([199f55f](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/commit/199f55f8a9254119ba1a01d019ea2b1e02822278))
+
 ## [1.3.2](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/compare/v1.3.1...v1.3.2) (2026-07-04)
 
 
