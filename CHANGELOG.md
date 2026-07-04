@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.4](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/compare/v1.3.3...v1.3.4) (2026-07-04)
+
+
+### Bug Fixes
+
+* log all HTTP exceptions in GlobalExceptionFilter for Grafana visibility ([de27157](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/commit/de2715714ecec911de155bed4e09901b03ff29a9))
+
 ## [1.3.3](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/compare/v1.3.2...v1.3.3) (2026-07-04)
 
 
