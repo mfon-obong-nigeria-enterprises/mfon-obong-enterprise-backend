@@ -25,13 +25,11 @@ interface AuthenticatedSocket extends Socket {
     origin: [
       'http://localhost:3000',
       'http://localhost:3001',
-      'https://your-frontend-domain.com',
-      'https://mfon-obong-enterprises.pipeops.net',
-      'https://frontend-tawny-pi-78.vercel.app',
-      'https://frontend-mfon.vercel.app',
-      // Add pattern to allow all Vercel preview and production deployments
-      /^https:\/\/.*\.vercel\.app$/,
-      /^https:\/\/frontend.*\.vercel\.app$/,
+      'http://localhost:5173',
+      'https://mfonobongenterprise.com',
+      'https://www.mfonobongenterprise.com',
+      'https://staging.mfonobongenterprise.com',
+      /^https:\/\/.*\.pages\.dev$/,
     ],
     credentials: true,
   },
