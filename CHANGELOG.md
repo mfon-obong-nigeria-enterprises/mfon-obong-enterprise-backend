@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.1](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/compare/v1.3.0...v1.3.1) (2026-07-04)
+
+
+### Bug Fixes
+
+* comment out orphaned seed:categories Command decorator ([57a111c](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/commit/57a111cc43088478ef556d1d6b65b91a3bac12b4))
+* seed service ([98f7b1b](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/commit/98f7b1be3b88b2a1c555e0fa7dd8cdb7da951eb3))
+
 ## [1.3.0](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/compare/v1.2.3...v1.3.0) (2026-07-02)
 
 
