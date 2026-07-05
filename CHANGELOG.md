@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.5](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/compare/v1.3.4...v1.3.5) (2026-07-05)
+
+
+### Bug Fixes
+
+* mimetype validation ([471b7f1](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/commit/471b7f14756442b14f9e691387991ecca27aef68))
+* mimetype validation ([56f899e](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/commit/56f899e98733e410e9c797d29849a993098b3461))
+
 ## [1.3.4](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/compare/v1.3.3...v1.3.4) (2026-07-04)
 
 
