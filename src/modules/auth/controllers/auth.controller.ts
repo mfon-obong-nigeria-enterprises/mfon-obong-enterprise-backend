@@ -5,10 +5,14 @@ import { RefreshTokenDto } from '../dto/auth.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { CookieConfigUtil } from '../utils/cookie-config.util';
+import { JwtService } from '@nestjs/jwt';
 
 @Controller('/auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly jwtService: JwtService,
+  ) {}
 
   @UseGuards(AuthGuard('local'))
   @Post('/login')
@@ -63,28 +67,29 @@ export class AuthController {
     };
   }
 
-  @UseGuards(JwtAuthGuard)
+  // No JWT guard — logout must always succeed even with an expired/blacklisted token
   @Post('/logout')
   async logout(@Request() req, @Response({ passthrough: true }) res) {
-    // Get token from cookies or header
     const token = req.cookies?.accessToken || req.headers.authorization?.replace('Bearer ', '');
     const refreshToken = req.cookies?.refreshToken;
     const userAgent = req.headers['user-agent'];
-    
-    // Clear cookies
+
+    // Always clear cookies first
     res.clearCookie('accessToken');
     res.clearCookie('refreshToken');
-    
-    // Blacklist tokens in AuthService
-    await this.authService.logout(req.user, token, userAgent);
-    
-    // Also invalidate refresh token if it exists
-    if (refreshToken) {
-      this.authService.invalidateRefreshToken(refreshToken);
+
+    // Decode (not verify) token to get user info for activity logging
+    let user: any = null;
+    if (token) {
+      try { user = this.jwtService.decode(token); } catch {}
     }
-    
-    return {
-      message: 'Logout successful'
-    };
+
+    await this.authService.logout(user, token, userAgent);
+
+    if (refreshToken) {
+      this.authService.invalidateRefreshToken(refreshToken).catch(() => {});
+    }
+
+    return { message: 'Logout successful' };
   }
 }

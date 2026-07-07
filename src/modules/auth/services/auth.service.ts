@@ -201,16 +201,18 @@ export class AuthService {
         await this.prisma.blacklistedToken.create({ data: { token, expiresAt } }).catch(() => {});
       }
 
-      try {
-        await this.systemActivityLogService.createLog({
-          action: 'LOGOUT',
-          details: `User logged out successfully`,
-          performedBy: user.email || user.name,
-          role: user.role,
-          device: extractDeviceInfo(userAgent || ''),
-          branchId: user.branchId?.toString(),
-        });
-      } catch {}
+      if (user) {
+        try {
+          await this.systemActivityLogService.createLog({
+            action: 'LOGOUT',
+            details: `User logged out successfully`,
+            performedBy: user.email || user.name || 'Unknown',
+            role: user.role || 'UNKNOWN',
+            device: extractDeviceInfo(userAgent || ''),
+            branchId: user.branchId?.toString(),
+          });
+        } catch {}
+      }
 
       return { message: 'Logout successful' };
     } catch (error: any) {
@@ -308,16 +310,6 @@ export class AuthService {
           userAgent: extractDeviceInfo(userAgent || ''),
         },
       });
-
-      try {
-        await this.systemActivityLogService.createLog({
-          action: 'TOKEN_REFRESH',
-          details: `Access token refreshed successfully`,
-          performedBy: user.email,
-          role: user.role,
-          device: extractDeviceInfo(userAgent || ''),
-        });
-      } catch {}
 
       return {
         access_token,
