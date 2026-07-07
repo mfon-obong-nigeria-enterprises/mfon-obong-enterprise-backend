@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.6](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/compare/v1.3.5...v1.3.6) (2026-07-07)
+
+
+### Bug Fixes
+
+* token invalidation and remove refresh token from activity logs ([ef6b2f9](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/commit/ef6b2f9184446ce654dfb1519416610e6cd8c0e2))
+* token invalidation and remove refresh token from activity logs ([c2d191c](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/commit/c2d191cb5d6aed5db123845912212f9cfbdabae8))
+
 ## [1.3.5](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/compare/v1.3.4...v1.3.5) (2026-07-05)
 
 
