@@ -7,21 +7,27 @@ import { PrismaService } from '../../../prisma/prisma.service';
 import { v2 as cloudinary } from 'cloudinary';
 import { Readable } from 'stream';
 
+type MulterFile = {
+  mimetype: string;
+  buffer: Buffer;
+};
+
 @Injectable()
 export class UserProfilePictureService {
   constructor(private readonly prisma: PrismaService) {}
 
   async uploadProfilePicture(
     userId: string,
-    file: Express.Multer.File,
+    file: MulterFile,
     currentUser: any,
   ): Promise<string> {
     try {
       if (!file) {
-        throw new ForbiddenException('No file provided. Please upload a JPEG image.');
+        throw new ForbiddenException('No file provided. Please upload a JPEG or PNG image.');
       }
-      if (file.mimetype !== 'image/jpeg' && file.mimetype !== 'image/pjpeg') {
-        throw new ForbiddenException('Only JPEG images are allowed');
+      const allowedMimetypes = ['image/jpeg', 'image/pjpeg', 'image/png'];
+      if (!allowedMimetypes.includes(file.mimetype)) {
+        throw new ForbiddenException('Only JPEG and PNG images are allowed');
       }
       if (
         currentUser.userId !== userId &&
@@ -63,7 +69,7 @@ export class UserProfilePictureService {
       return result.secure_url;
     } catch (error) {
       if (error instanceof ForbiddenException || error instanceof NotFoundException) throw error;
-      throw new ForbiddenException(error.message || 'Profile picture upload failed');
+      throw new ForbiddenException((error as Error).message || 'Profile picture upload failed');
     }
   }
 
@@ -88,7 +94,7 @@ export class UserProfilePictureService {
       }
     } catch (error) {
       if (error instanceof ForbiddenException || error instanceof NotFoundException) throw error;
-      throw new ForbiddenException(error.message || 'Profile picture delete failed');
+      throw new ForbiddenException((error as Error).message || 'Profile picture delete failed');
     }
   }
 }

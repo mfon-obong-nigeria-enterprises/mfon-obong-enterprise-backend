@@ -1,7 +1,7 @@
 import { Command } from 'nestjs-command';
 import { ConflictException, Injectable } from '@nestjs/common';
 import { UsersService } from '../../users/services/users.service';
-import { CategoriesService } from '../../categories/services/categories.service';
+// import { CategoriesService } from '../../categories/services/categories.service';
 import { BranchesService } from '../../branches/services/branches.service';
 import { UserRole } from '../../../common/enums';
 
@@ -9,7 +9,7 @@ import { UserRole } from '../../../common/enums';
 export class SeedService {
   constructor(
     private readonly usersService: UsersService,
-    private readonly categoriesService: CategoriesService,
+    // private readonly categoriesService: CategoriesService,
     private readonly branchesService: BranchesService,
   ) {}
 
@@ -22,16 +22,16 @@ export class SeedService {
     let defaultBranch;
     try {
       defaultBranch = await this.branchesService.create({
-        name: 'Head Office',
-        address: 'Shelter Afrique',
-        phone: '+1234567890',
+        name: 'Shelter Afrique',
+        address: 'Plot 32 Block 1, Shelter Afrique, Uyo, Akwa Ibom State',
+        phone: '+2348024720210',
       });
       console.log(`Created default branch: ${defaultBranch.name}`);
     } catch (error) {
       // If branch already exists, find it
       const branches = await this.branchesService.findAll();
       defaultBranch =
-        branches.find((b) => b.name === 'Head Office') || branches[0];
+        branches.find((b) => b.name === 'Shelter Afrique') || branches[0];
       console.log(`Using existing branch: ${defaultBranch?.name}`);
     }
 
@@ -42,14 +42,14 @@ export class SeedService {
 
     const superAdmin = {
       name: 'Ndifreke Mfon',
-      email: 'superadmin@example.com',
+      email: 'ndifrekemfon@gmail.com',
       password: 'Superadmin123!',
-      phone: '+1234567890',
-      address: 'Head Office, Shelter Afrique',
+      phone: '+2347034367795',
+      address: 'Shelter Afrique',
       role: UserRole.SUPER_ADMIN,
       branchId: defaultBranch._id.toString(),
-      branch: 'Head Office',
-      branchAddress: 'Sheelter Afrique',
+      branch: 'Shelter Afrique',
+      branchAddress: 'Plot 32 Block 1, Shelter Afrique, Uyo, Akwa Ibom State',
     };
 
     try {
@@ -67,97 +67,97 @@ export class SeedService {
     }
   }
 
-  @Command({
-    command: 'seed:categories',
-    describe: 'Seed initial product categories',
-  })
-  async seedCategories() {
-    // Find the default branch
-    const branches = await this.branchesService.findAll();
-    const defaultBranch =
-      branches.find((b) => b.name === 'Head Office') || branches[0];
+  // @Command({
+  //   command: 'seed:categories',
+  //   describe: 'Seed initial product categories',
+  // })
+  // async seedCategories() {
+  //   // Find the default branch
+  //   const branches = await this.branchesService.findAll();
+  //   const defaultBranch =
+  //     branches.find((b) => b.name === 'Shelter Afrique') || branches[0];
 
-    if (!defaultBranch) {
-      console.error('No default branch available. Cannot create categories.');
-      return;
-    }
+  //   if (!defaultBranch) {
+  //     console.error('No default branch available. Cannot create categories.');
+  //     return;
+  //   }
 
-    const categories = [
-      {
-        name: 'Marine Board',
-        units: ['Sheet'],
-        description: 'Marine grade plywood boards',
-        branchId: defaultBranch._id.toString(),
-      },
-      {
-        name: 'Binding Wire',
-        units: ['Bundle of 20KG', 'Bundle of 10KG'],
-        description: 'Steel binding wire for construction',
-        branchId: defaultBranch._id.toString(),
-      },
-      {
-        name: 'Rod',
-        units: [
-          'Length of quarter',
-          'Length of 8MM',
-          'Length of 10MM',
-          'Length of 12MM',
-          'Length of 16MM',
-          'Length of 20MM',
-          'Length of 25MM',
-        ],
-        description: 'Steel rods for reinforcement',
-        branchId: defaultBranch._id.toString(),
-      },
-      {
-        name: 'Nail',
-        units: [
-          'Bag of 1.5 Inches',
-          'Bag of 2 Inches',
-          'Bag of 3 Inches',
-          'Bag of 4 Inches',
-          'Bag of 5 Inches',
-          'Bag of Cupper',
-          'LBS of 1.5 Inches',
-          'LBS of 2 Inches',
-          'LBS of 3 Inches',
-          'LBS of 4 Inches',
-          'LBS of 5 Inches',
-          'LBS of Cupper',
-        ],
-        description: 'Various types and sizes of nails',
-        branchId: defaultBranch._id.toString(),
-      },
-      {
-        name: 'BRC',
-        units: ['Bundle of 4MM', 'Bundle of 5MM'],
-        description: 'BRC mesh for concrete reinforcement',
-        branchId: defaultBranch._id.toString(),
-      },
-      {
-        name: 'Cement',
-        units: ['Bag of Dangote', 'Bag of Larfarge'],
-        description: 'Portland cement for construction',
-        branchId: defaultBranch._id.toString(),
-      },
-    ];
+  //   const categories = [
+  //     {
+  //       name: 'Marine Board',
+  //       units: ['Sheet'],
+  //       description: 'Marine grade plywood boards',
+  //       branchId: defaultBranch._id.toString(),
+  //     },
+  //     {
+  //       name: 'Binding Wire',
+  //       units: ['Bundle of 20KG', 'Bundle of 10KG'],
+  //       description: 'Steel binding wire for construction',
+  //       branchId: defaultBranch._id.toString(),
+  //     },
+  //     {
+  //       name: 'Rod',
+  //       units: [
+  //         'Length of quarter',
+  //         'Length of 8MM',
+  //         'Length of 10MM',
+  //         'Length of 12MM',
+  //         'Length of 16MM',
+  //         'Length of 20MM',
+  //         'Length of 25MM',
+  //       ],
+  //       description: 'Steel rods for reinforcement',
+  //       branchId: defaultBranch._id.toString(),
+  //     },
+  //     {
+  //       name: 'Nail',
+  //       units: [
+  //         'Bag of 1.5 Inches',
+  //         'Bag of 2 Inches',
+  //         'Bag of 3 Inches',
+  //         'Bag of 4 Inches',
+  //         'Bag of 5 Inches',
+  //         'Bag of Cupper',
+  //         'LBS of 1.5 Inches',
+  //         'LBS of 2 Inches',
+  //         'LBS of 3 Inches',
+  //         'LBS of 4 Inches',
+  //         'LBS of 5 Inches',
+  //         'LBS of Cupper',
+  //       ],
+  //       description: 'Various types and sizes of nails',
+  //       branchId: defaultBranch._id.toString(),
+  //     },
+  //     {
+  //       name: 'BRC',
+  //       units: ['Bundle of 4MM', 'Bundle of 5MM'],
+  //       description: 'BRC mesh for concrete reinforcement',
+  //       branchId: defaultBranch._id.toString(),
+  //     },
+  //     {
+  //       name: 'Cement',
+  //       units: ['Bag of Dangote', 'Bag of Larfarge'],
+  //       description: 'Portland cement for construction',
+  //       branchId: defaultBranch._id.toString(),
+  //     },
+  //   ];
 
-    for (const category of categories) {
-      try {
-        await this.categoriesService.create(category);
-        console.log(`Created category: ${category.name}`);
-      } catch (error: any) {
-        if (error instanceof ConflictException) {
-          console.log(`Category already exists: ${category.name}`);
-        } else {
-          console.error(
-            `Error creating category ${category.name}:`,
-            error?.message,
-          );
-        }
-      }
-    }
-  }
+  //   for (const category of categories) {
+  //     try {
+  //       await this.categoriesService.create(category);
+  //       console.log(`Created category: ${category.name}`);
+  //     } catch (error: any) {
+  //       if (error instanceof ConflictException) {
+  //         console.log(`Category already exists: ${category.name}`);
+  //       } else {
+  //         console.error(
+  //           `Error creating category ${category.name}:`,
+  //           error?.message,
+  //         );
+  //       }
+  //     }
+  //   }
+  // }
 
   @Command({
     command: 'seed:maintainer',
@@ -167,7 +167,7 @@ export class SeedService {
     // Find the default branch
     const branches = await this.branchesService.findAll();
     const defaultBranch =
-      branches.find((b) => b.name === 'Head Office') || branches[0];
+      branches.find((b) => b.name === 'Shelter Afrique') || branches[0];
 
     if (!defaultBranch) {
       console.error('No default branch available. Cannot create maintainer.');
@@ -178,12 +178,12 @@ export class SeedService {
       name: 'Aniekan Udo',
       email: 'aniekan50k@gmail.com',
       password: 'Maintainer123!',
-      phone: '+1234567891',
-      address: 'IT Department, Sheelter Afrique',
+      phone: '+2347085064801',
+      address: '568 Oron Road, Uyo, Akwa Ibom State',
       role: UserRole.MAINTAINER,
       branchId: defaultBranch._id.toString(),
-      branch: 'Head Office',
-      branchAddress: 'Sheelter Afrique',
+      branch: 'Shelter Afrique',
+      branchAddress: 'Plot 32 Block 1, Shelter Afrique, Uyo, Akwa Ibom State',
     };
 
     try {

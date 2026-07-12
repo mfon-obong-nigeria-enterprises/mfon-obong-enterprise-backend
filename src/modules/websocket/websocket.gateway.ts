@@ -25,13 +25,11 @@ interface AuthenticatedSocket extends Socket {
     origin: [
       'http://localhost:3000',
       'http://localhost:3001',
-      'https://your-frontend-domain.com',
-      'https://mfon-obong-enterprises.pipeops.net',
-      'https://frontend-tawny-pi-78.vercel.app',
-      'https://frontend-mfon.vercel.app',
-      // Add pattern to allow all Vercel preview and production deployments
-      /^https:\/\/.*\.vercel\.app$/,
-      /^https:\/\/frontend.*\.vercel\.app$/,
+      'http://localhost:5173',
+      'https://mfonobongenterprise.com',
+      'https://www.mfonobongenterprise.com',
+      'https://staging.mfonobongenterprise.com',
+      /^https:\/\/.*\.pages\.dev$/,
     ],
     credentials: true,
   },
@@ -85,11 +83,12 @@ export class AppWebSocketGateway
         decoded = this.jwtService.verify(token);
       } catch (error) {
         // Token is invalid or expired
-        if (error.name === 'TokenExpiredError') {
+        const err = error as Error;
+        if (err.name === 'TokenExpiredError') {
           this.logger.warn(`Client ${client.id} token expired - client should refresh and reconnect`);
           client.emit('auth_error', { message: 'Token expired', code: 'TOKEN_EXPIRED' });
         } else {
-          this.logger.warn(`Client ${client.id} invalid token: ${error.message}`);
+          this.logger.warn(`Client ${client.id} invalid token: ${err.message}`);
           client.emit('auth_error', { message: 'Invalid token', code: 'INVALID_TOKEN' });
         }
         client.disconnect();
@@ -109,7 +108,7 @@ export class AppWebSocketGateway
         `Client connected: ${client.userEmail} (${client.userRole}) - Socket ID: ${client.id}`,
       );
     } catch (error) {
-      this.logger.error(`Authentication failed for client ${client.id}:`, error.message);
+      this.logger.error(`Authentication failed for client ${client.id}:`, (error as Error).message);
       client.emit('auth_error', { message: 'Authentication failed' });
       client.disconnect();
     }

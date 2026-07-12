@@ -1,5 +1,51 @@
 # Changelog
 
+## [1.3.6](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/compare/v1.3.5...v1.3.6) (2026-07-07)
+
+
+### Bug Fixes
+
+* token invalidation and remove refresh token from activity logs ([ef6b2f9](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/commit/ef6b2f9184446ce654dfb1519416610e6cd8c0e2))
+* token invalidation and remove refresh token from activity logs ([c2d191c](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/commit/c2d191cb5d6aed5db123845912212f9cfbdabae8))
+
+## [1.3.5](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/compare/v1.3.4...v1.3.5) (2026-07-05)
+
+
+### Bug Fixes
+
+* mimetype validation ([471b7f1](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/commit/471b7f14756442b14f9e691387991ecca27aef68))
+* mimetype validation ([56f899e](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/commit/56f899e98733e410e9c797d29849a993098b3461))
+
+## [1.3.4](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/compare/v1.3.3...v1.3.4) (2026-07-04)
+
+
+### Bug Fixes
+
+* log all HTTP exceptions in GlobalExceptionFilter for Grafana visibility ([de27157](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/commit/de2715714ecec911de155bed4e09901b03ff29a9))
+
+## [1.3.3](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/compare/v1.3.2...v1.3.3) (2026-07-04)
+
+
+### Bug Fixes
+
+* cast caught errors to Error type in websocket gateway ([199f55f](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/commit/199f55f8a9254119ba1a01d019ea2b1e02822278))
+
+## [1.3.2](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/compare/v1.3.1...v1.3.2) (2026-07-04)
+
+
+### Bug Fixes
+
+* update WebSocket gateway CORS to allow correct domains ([9966350](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/commit/9966350f243daa663768bec988e1961a0b2879b2))
+* update WebSocket gateway CORS to allow correct domains ([cd6dba0](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/commit/cd6dba0e4fafe337c9e21fdb68a112c9eb86be84))
+
+## [1.3.1](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/compare/v1.3.0...v1.3.1) (2026-07-04)
+
+
+### Bug Fixes
+
+* comment out orphaned seed:categories Command decorator ([57a111c](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/commit/57a111cc43088478ef556d1d6b65b91a3bac12b4))
+* seed service ([98f7b1b](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/commit/98f7b1be3b88b2a1c555e0fa7dd8cdb7da951eb3))
+
 ## [1.3.0](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/compare/v1.2.3...v1.3.0) (2026-07-02)
 
 
