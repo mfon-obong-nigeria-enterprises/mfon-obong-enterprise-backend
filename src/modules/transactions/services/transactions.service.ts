@@ -207,6 +207,8 @@ export class TransactionsService {
             unitPrice: effectiveUnitPrice,
             discount: item.discount || 0,
             subtotal: itemSubtotal,
+            bundlesQty: item.bundlesQty ?? null,
+            kgQty: item.kgQty ?? null,
           };
         }),
       );
@@ -282,6 +284,8 @@ export class TransactionsService {
                 unitPrice: item.unitPrice,
                 discount: item.discount,
                 subtotal: item.subtotal,
+                bundlesQty: item.bundlesQty ?? null,
+                kgQty: item.kgQty ?? null,
               })),
             },
             extraCharges: extraCharges.length > 0

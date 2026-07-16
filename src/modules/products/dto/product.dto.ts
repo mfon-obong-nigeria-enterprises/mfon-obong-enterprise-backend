@@ -100,6 +100,19 @@ export class CreateProductDto {
   hasVariants?: boolean;
 
   @IsOptional()
+  @IsBoolean()
+  isBundleProduct?: boolean;
+
+  @IsOptional()
+  @IsNumber()
+  @Min(1)
+  bundleSize?: number;
+
+  @IsOptional()
+  @IsString()
+  subUnit?: string;
+
+  @IsOptional()
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => CreateVariantDto)
@@ -141,6 +154,19 @@ export class UpdateProductDto {
   @IsOptional()
   @IsBoolean()
   hasVariants?: boolean;
+
+  @IsOptional()
+  @IsBoolean()
+  isBundleProduct?: boolean;
+
+  @IsOptional()
+  @IsNumber()
+  @Min(1)
+  bundleSize?: number;
+
+  @IsOptional()
+  @IsString()
+  subUnit?: string;
 }
 
 export enum StockOperation {

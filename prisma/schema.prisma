@@ -77,10 +77,13 @@ model Product {
   unitPrice     Float     @default(0)
   stock         Float     @default(0)
   minStockLevel Float     @default(0)
-  hasVariants   Boolean   @default(false)
-  isActive      Boolean   @default(true)
-  priceHistory  Json      @default("[]")
-  branchId      String
+  hasVariants      Boolean   @default(false)
+  isBundleProduct  Boolean   @default(false)
+  bundleSize       Float?
+  subUnit          String?
+  isActive         Boolean   @default(true)
+  priceHistory     Json      @default("[]")
+  branchId         String
   branchRef     Branch    @relation(fields: [branchId], references: [id])
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
@@ -182,6 +185,8 @@ model TransactionItem {
   originalUnitPrice Float?
   currentUnitPrice  Float?
   refundUnitPrice   Float?
+  bundlesQty        Float?
+  kgQty             Float?
 }
 
 model ExtraCharge {

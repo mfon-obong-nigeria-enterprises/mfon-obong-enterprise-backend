@@ -94,6 +94,9 @@ export class ProductsService {
         stock: hasVariants ? 0 : (createProductDto.stock ?? 0),
         minStockLevel: hasVariants ? 0 : (createProductDto.minStockLevel ?? 0),
         hasVariants,
+        isBundleProduct: createProductDto.isBundleProduct ?? false,
+        bundleSize: createProductDto.bundleSize ?? null,
+        subUnit: createProductDto.subUnit ?? null,
         branchId,
         priceHistory: hasVariants ? [] : [{ price: createProductDto.unitPrice ?? 0, date: new Date() }],
         variants: hasVariants && createProductDto.variants?.length
