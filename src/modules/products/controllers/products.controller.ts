@@ -16,6 +16,9 @@ import {
   CreateProductDto,
   UpdateProductDto,
   UpdateStockDto,
+  CreateVariantDto,
+  UpdateVariantDto,
+  UpdateVariantStockDto,
 } from '../dto/product.dto';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../../auth/guards/roles.guard';
@@ -140,5 +143,47 @@ export class ProductsController {
   async hardRemove(@Param('id') id: string, @Request() req): Promise<void> {
     const device = extractDeviceInfo(req.get('user-agent'));
     return this.productsService.hardRemove(id, req.user, device);
+  }
+
+  // ── Variant routes ──────────────────────────────────────────────────────────
+
+  @Post(':id/variants')
+  @Roles(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.MAINTAINER)
+  async createVariant(
+    @Param('id') productId: string,
+    @Body() dto: CreateVariantDto,
+    @Request() req,
+  ): Promise<any> {
+    return this.productsService.createVariant(productId, dto, req.user);
+  }
+
+  @Patch('variants/:variantId')
+  @Roles(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.MAINTAINER)
+  async updateVariant(
+    @Param('variantId') variantId: string,
+    @Body() dto: UpdateVariantDto,
+    @Request() req,
+  ): Promise<any> {
+    return this.productsService.updateVariant(variantId, dto, req.user);
+  }
+
+  @Patch('variants/:variantId/stock')
+  @Roles(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.MAINTAINER)
+  async updateVariantStock(
+    @Param('variantId') variantId: string,
+    @Body() dto: UpdateVariantStockDto,
+    @Request() req,
+  ): Promise<any> {
+    const device = extractDeviceInfo(req.get('user-agent'));
+    return this.productsService.updateVariantStock(variantId, dto, req.user, device);
+  }
+
+  @Delete('variants/:variantId')
+  @Roles(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.MAINTAINER)
+  async deleteVariant(
+    @Param('variantId') variantId: string,
+    @Request() req,
+  ): Promise<void> {
+    return this.productsService.deleteVariant(variantId, req.user);
   }
 }

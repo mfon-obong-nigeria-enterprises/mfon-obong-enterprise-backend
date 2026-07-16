@@ -40,6 +40,10 @@ export class TransactionItemDto {
   @IsString()
   productId: string;
 
+  @IsOptional()
+  @IsString()
+  variantId?: string;
+
   @IsNumber()
   @Min(0)
   quantity: number;

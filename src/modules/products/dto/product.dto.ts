@@ -5,7 +5,63 @@ import {
   IsString,
   Min,
   IsEnum,
+  IsBoolean,
+  IsArray,
+  ValidateNested,
 } from 'class-validator';
+import { Type } from 'class-transformer';
+
+export class CreateVariantDto {
+  @IsNotEmpty()
+  @IsString()
+  name: string;
+
+  @IsNumber()
+  @Min(0)
+  unitPrice: number;
+
+  @IsNumber()
+  @Min(0)
+  stock: number;
+
+  @IsNumber()
+  @Min(0)
+  minStockLevel: number;
+}
+
+export class UpdateVariantDto {
+  @IsOptional()
+  @IsString()
+  name?: string;
+
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  unitPrice?: number;
+
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  stock?: number;
+
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  minStockLevel?: number;
+
+  @IsOptional()
+  @IsBoolean()
+  isActive?: boolean;
+}
+
+export class UpdateVariantStockDto {
+  @IsNumber()
+  @Min(0)
+  quantity: number;
+
+  @IsEnum(['add', 'subtract'])
+  operation: 'add' | 'subtract';
+}
 
 export class CreateProductDto {
   @IsNotEmpty()
@@ -20,24 +76,34 @@ export class CreateProductDto {
   @IsString()
   unit: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumber()
   @Min(0)
-  unitPrice: number;
+  unitPrice?: number;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumber()
   @Min(0)
-  stock: number;
+  stock?: number;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumber()
   @Min(0)
-  minStockLevel: number;
+  minStockLevel?: number;
 
   @IsNotEmpty()
   @IsString()
   branchId: string;
+
+  @IsOptional()
+  @IsBoolean()
+  hasVariants?: boolean;
+
+  @IsOptional()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => CreateVariantDto)
+  variants?: CreateVariantDto[];
 }
 
 export class UpdateProductDto {
@@ -71,6 +137,10 @@ export class UpdateProductDto {
   @IsOptional()
   @IsString()
   branchId?: string;
+
+  @IsOptional()
+  @IsBoolean()
+  hasVariants?: boolean;
 }
 
 export enum StockOperation {

@@ -74,9 +74,10 @@ model Product {
   categoryId    String
   categoryRef   Category  @relation(fields: [categoryId], references: [id])
   unit          String
-  unitPrice     Float
+  unitPrice     Float     @default(0)
   stock         Float     @default(0)
   minStockLevel Float     @default(0)
+  hasVariants   Boolean   @default(false)
   isActive      Boolean   @default(true)
   priceHistory  Json      @default("[]")
   branchId      String
@@ -85,8 +86,24 @@ model Product {
   updatedAt     DateTime  @updatedAt
 
   transactionItems TransactionItem[]
+  variants         ProductVariant[]
 
   @@unique([name, branchId])
+}
+
+model ProductVariant {
+  id            String   @id @default(cuid())
+  productId     String
+  productRef    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  name          String
+  stock         Float    @default(0)
+  unitPrice     Float
+  minStockLevel Float    @default(0)
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  transactionItems TransactionItem[]
 }
 
 model Client {
@@ -147,16 +164,19 @@ model Transaction {
 }
 
 model TransactionItem {
-  id                String      @id @default(cuid())
+  id                String          @id @default(cuid())
   transactionId     String
-  transaction       Transaction @relation(fields: [transactionId], references: [id], onDelete: Cascade)
+  transaction       Transaction     @relation(fields: [transactionId], references: [id], onDelete: Cascade)
   productId         String
-  productRef        Product     @relation(fields: [productId], references: [id])
+  productRef        Product         @relation(fields: [productId], references: [id])
   productName       String
+  variantId         String?
+  variantRef        ProductVariant? @relation(fields: [variantId], references: [id])
+  variantName       String?
   quantity          Float
   unit              String
   unitPrice         Float
-  discount          Float       @default(0)
+  discount          Float           @default(0)
   subtotal          Float
   wholesalePrice    Float?
   originalUnitPrice Float?

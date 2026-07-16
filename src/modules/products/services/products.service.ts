@@ -9,6 +9,9 @@ import {
   UpdateProductDto,
   UpdateStockDto,
   StockOperation,
+  CreateVariantDto,
+  UpdateVariantDto,
+  UpdateVariantStockDto,
 } from '../dto/product.dto';
 import { CategoriesService } from '../../categories/services/categories.service';
 import { UserRole } from '../../../common/enums';
@@ -42,6 +45,7 @@ export class ProductsService {
   private readonly productInclude = {
     categoryRef: { select: { id: true, name: true, units: true } },
     branchRef: { select: { id: true, name: true } },
+    variants: { where: { isActive: true }, orderBy: { name: 'asc' as const } },
   };
 
   async create(
@@ -79,16 +83,27 @@ export class ProductsService {
       );
     }
 
+    const hasVariants = createProductDto.hasVariants ?? false;
+
     const product = await this.prisma.product.create({
       data: {
         name: createProductDto.name,
         categoryId: createProductDto.categoryId,
         unit: createProductDto.unit,
-        unitPrice: createProductDto.unitPrice,
-        stock: createProductDto.stock ?? 0,
-        minStockLevel: createProductDto.minStockLevel ?? 0,
+        unitPrice: hasVariants ? 0 : (createProductDto.unitPrice ?? 0),
+        stock: hasVariants ? 0 : (createProductDto.stock ?? 0),
+        minStockLevel: hasVariants ? 0 : (createProductDto.minStockLevel ?? 0),
+        hasVariants,
         branchId,
-        priceHistory: [{ price: createProductDto.unitPrice, date: new Date() }],
+        priceHistory: hasVariants ? [] : [{ price: createProductDto.unitPrice ?? 0, date: new Date() }],
+        variants: hasVariants && createProductDto.variants?.length
+          ? { create: createProductDto.variants.map(v => ({
+              name: v.name,
+              unitPrice: v.unitPrice,
+              stock: v.stock,
+              minStockLevel: v.minStockLevel,
+            })) }
+          : undefined,
       },
       include: this.productInclude,
     });
@@ -386,5 +401,68 @@ export class ProductsService {
 
   calculatePrice(product: any, quantity: number): number {
     return quantity * product.unitPrice;
+  }
+
+  async createVariant(productId: string, dto: CreateVariantDto, currentUser?: any): Promise<any> {
+    const product = await this.prisma.product.findFirst({ where: { id: productId } });
+    if (!product) throw new NotFoundException('Product not found');
+
+    const variant = await this.prisma.productVariant.create({
+      data: { productId, name: dto.name, unitPrice: dto.unitPrice, stock: dto.stock, minStockLevel: dto.minStockLevel },
+    });
+
+    if (!product.hasVariants) {
+      await this.prisma.product.update({ where: { id: productId }, data: { hasVariants: true } });
+    }
+
+    return variant;
+  }
+
+  async updateVariant(variantId: string, dto: UpdateVariantDto, currentUser?: any): Promise<any> {
+    const variant = await this.prisma.productVariant.findFirst({ where: { id: variantId } });
+    if (!variant) throw new NotFoundException('Variant not found');
+    return this.prisma.productVariant.update({ where: { id: variantId }, data: dto });
+  }
+
+  async deleteVariant(variantId: string, currentUser?: any): Promise<void> {
+    const variant = await this.prisma.productVariant.findFirst({ where: { id: variantId } });
+    if (!variant) throw new NotFoundException('Variant not found');
+    await this.prisma.productVariant.update({ where: { id: variantId }, data: { isActive: false } });
+
+    const remaining = await this.prisma.productVariant.count({ where: { productId: variant.productId, isActive: true } });
+    if (remaining === 0) {
+      await this.prisma.product.update({ where: { id: variant.productId }, data: { hasVariants: false } });
+    }
+  }
+
+  async updateVariantStock(variantId: string, dto: UpdateVariantStockDto, currentUser?: any, device?: string): Promise<any> {
+    const variant = await this.prisma.productVariant.findFirst({ where: { id: variantId, isActive: true } });
+    if (!variant) throw new NotFoundException('Variant not found');
+
+    if (dto.operation === 'subtract' && variant.stock < dto.quantity) {
+      throw new BadRequestException(`Insufficient stock: current ${variant.stock}, requested ${dto.quantity}`);
+    }
+
+    const newStock = dto.operation === 'add' ? variant.stock + dto.quantity : variant.stock - dto.quantity;
+    const updated = await this.prisma.productVariant.update({ where: { id: variantId }, data: { stock: newStock } });
+
+    try {
+      this.systemActivityLogService.createLog({
+        action: 'STOCK_UPDATED',
+        details: `Variant stock ${dto.operation === 'add' ? 'increased' : 'decreased'} for variant ${variant.name}: ${dto.quantity} units (New stock: ${newStock})`,
+        performedBy: currentUser?.email || currentUser?.name || 'System',
+        role: currentUser?.role || 'SYSTEM',
+        device: device || 'System',
+        branchId: currentUser?.branchId?.toString(),
+      }).catch(() => {});
+    } catch {}
+
+    return updated;
+  }
+
+  async getVariantById(variantId: string): Promise<any> {
+    const variant = await this.prisma.productVariant.findFirst({ where: { id: variantId, isActive: true } });
+    if (!variant) throw new NotFoundException('Variant not found');
+    return variant;
   }
 }
