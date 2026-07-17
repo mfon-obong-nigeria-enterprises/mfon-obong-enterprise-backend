@@ -187,6 +187,7 @@ model TransactionItem {
   refundUnitPrice   Float?
   bundlesQty        Float?
   kgQty             Float?
+  subUnit           String?
 }
 
 model ExtraCharge {
