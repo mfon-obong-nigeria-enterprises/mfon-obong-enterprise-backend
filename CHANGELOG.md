@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.4.0](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/compare/v1.3.6...v1.4.0) (2026-07-18)
+
+
+### Features
+
+* added balance and date to client registration ([6c0bce5](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/commit/6c0bce54d99dc664ce2828a1e0af4c70eb95d820))
+* bundle product schema and API support ([fd3021e](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/commit/fd3021eb6dc5f2608e63a25dc13c2df186b3287b))
+* modify the inventory logic for products with multiple grades and also products with sub-units ([b80e1a4](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/commit/b80e1a4bd3f0b51d7a7cb539bea7325c668663fc))
+* product variant ([4a27c9f](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/commit/4a27c9f957998e879f205115d2582fc5af5fde83))
+
 ## [1.3.6](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/compare/v1.3.5...v1.3.6) (2026-07-07)
 
 
