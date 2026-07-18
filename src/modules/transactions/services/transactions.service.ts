@@ -162,23 +162,54 @@ export class TransactionsService {
               `Invalid unit ${item.unit} for product ${product.name}. This product only accepts ${product.unit}`,
             );
           }
-          if (product.stock < item.quantity) {
-            throw new BadRequestException(
-              `Insufficient stock for ${product.name}. Available: ${product.stock} ${product.unit}`,
-            );
+
+          let effectiveUnitPrice: number;
+          let variantId: string | undefined;
+          let variantName: string | undefined;
+
+          if (product.hasVariants) {
+            if (!item.variantId) {
+              throw new BadRequestException(
+                `Product "${product.name}" has variants. Please select a grade/variant.`,
+              );
+            }
+            const variant = await this.productsService.getVariantById(item.variantId);
+            if (variant.productId !== (product.id || product._id)) {
+              throw new BadRequestException(`Variant does not belong to product "${product.name}"`);
+            }
+            if (variant.stock < item.quantity) {
+              throw new BadRequestException(
+                `Insufficient stock for ${product.name} - ${variant.name}. Available: ${variant.stock} ${product.unit}`,
+              );
+            }
+            effectiveUnitPrice = item.unitPrice && item.unitPrice > 0 ? item.unitPrice : variant.unitPrice;
+            variantId = variant.id;
+            variantName = variant.name;
+          } else {
+            if (product.stock < item.quantity) {
+              throw new BadRequestException(
+                `Insufficient stock for ${product.name}. Available: ${product.stock} ${product.unit}`,
+              );
+            }
+            effectiveUnitPrice = item.unitPrice && item.unitPrice > 0 ? item.unitPrice : product.unitPrice;
           }
-          const effectiveUnitPrice = item.unitPrice && item.unitPrice > 0 ? item.unitPrice : product.unitPrice;
+
           const price = effectiveUnitPrice * item.quantity;
           const itemSubtotal = price - (item.discount || 0);
           subtotal += itemSubtotal;
           return {
             productId: product.id || product._id,
             productName: product.name,
+            variantId,
+            variantName,
             quantity: item.quantity,
             unit: item.unit,
             unitPrice: effectiveUnitPrice,
             discount: item.discount || 0,
             subtotal: itemSubtotal,
+            bundlesQty: item.bundlesQty ?? null,
+            kgQty: item.kgQty ?? null,
+            subUnit: product.subUnit ?? null,
           };
         }),
       );
@@ -247,11 +278,16 @@ export class TransactionsService {
               create: processedItems.map((item) => ({
                 productId: item.productId,
                 productName: item.productName,
+                variantId: item.variantId ?? null,
+                variantName: item.variantName ?? null,
                 quantity: item.quantity,
                 unit: item.unit,
                 unitPrice: item.unitPrice,
                 discount: item.discount,
                 subtotal: item.subtotal,
+                bundlesQty: item.bundlesQty ?? null,
+                kgQty: item.kgQty ?? null,
+                subUnit: item.subUnit ?? null,
               })),
             },
             extraCharges: extraCharges.length > 0
@@ -278,17 +314,31 @@ export class TransactionsService {
         // Stock updates within the transaction
         if (createTransactionDto.type !== TransactionType.DEPOSIT) {
           for (const item of processedItems) {
-            const product = await tx.product.findUnique({ where: { id: item.productId } });
-            if (!product) throw new BadRequestException(`Product ${item.productId} not found`);
-            if (product.stock < item.quantity) {
-              throw new BadRequestException(
-                `Insufficient stock for ${item.productName}. Available: ${product.stock}`,
-              );
+            if (item.variantId) {
+              const variant = await tx.productVariant.findUnique({ where: { id: item.variantId } });
+              if (!variant) throw new BadRequestException(`Variant ${item.variantId} not found`);
+              if (variant.stock < item.quantity) {
+                throw new BadRequestException(
+                  `Insufficient stock for ${item.productName} - ${item.variantName}. Available: ${variant.stock}`,
+                );
+              }
+              await tx.productVariant.update({
+                where: { id: item.variantId },
+                data: { stock: variant.stock - item.quantity },
+              });
+            } else {
+              const product = await tx.product.findUnique({ where: { id: item.productId } });
+              if (!product) throw new BadRequestException(`Product ${item.productId} not found`);
+              if (product.stock < item.quantity) {
+                throw new BadRequestException(
+                  `Insufficient stock for ${item.productName}. Available: ${product.stock}`,
+                );
+              }
+              await tx.product.update({
+                where: { id: item.productId },
+                data: { stock: product.stock - item.quantity },
+              });
             }
-            await tx.product.update({
-              where: { id: item.productId },
-              data: { stock: product.stock - item.quantity },
-            });
           }
         }
 

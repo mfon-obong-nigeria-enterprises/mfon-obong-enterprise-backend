@@ -40,6 +40,10 @@ export class TransactionItemDto {
   @IsString()
   productId: string;
 
+  @IsOptional()
+  @IsString()
+  variantId?: string;
+
   @IsNumber()
   @Min(0)
   quantity: number;
@@ -61,6 +65,16 @@ export class TransactionItemDto {
   @IsNumber()
   @Min(0)
   wholesalePrice?: number;
+
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  bundlesQty?: number;
+
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  kgQty?: number;
 }
 
 // ...existing code...

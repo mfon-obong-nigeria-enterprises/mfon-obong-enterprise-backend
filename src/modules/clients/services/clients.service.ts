@@ -38,6 +38,13 @@ export class ClientsService {
     });
     if (existing) throw new ConflictException('Phone number already registered');
 
+    let initialBalance = createClientDto.balance ?? 0;
+    if (createClientDto.openingBalance && createClientDto.openingBalance > 0) {
+      initialBalance = createClientDto.openingBalanceType === 'credit'
+        ? createClientDto.openingBalance
+        : -createClientDto.openingBalance;
+    }
+
     const client = await this.prisma.client.create({
       data: {
         name: createClientDto.name,
@@ -45,7 +52,8 @@ export class ClientsService {
         email: createClientDto.email,
         description: createClientDto.description,
         address: createClientDto.address,
-        balance: createClientDto.balance ?? 0,
+        balance: initialBalance,
+        openingBalanceDate: createClientDto.openingBalanceDate,
         isRegistered: true,
       },
     });

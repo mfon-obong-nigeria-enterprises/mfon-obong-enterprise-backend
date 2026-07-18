@@ -34,6 +34,20 @@ export class CreateClientDto {
   @IsOptional()
   @IsNumber()
   balance?: number;
+
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  openingBalance?: number;
+
+  @IsOptional()
+  @IsEnum(['debt', 'credit'])
+  openingBalanceType?: 'debt' | 'credit';
+
+  @IsOptional()
+  @Type(() => Date)
+  @IsDate()
+  openingBalanceDate?: Date;
 }
 
 export class UpdateClientDto {
