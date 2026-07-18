@@ -117,6 +117,7 @@ model Client {
   description         String?
   address             String?
   balance             Float     @default(0)
+  openingBalanceDate  DateTime?
   isActive            Boolean   @default(true)
   lastTransactionDate DateTime?
   isRegistered        Boolean   @default(false)
