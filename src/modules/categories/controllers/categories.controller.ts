@@ -22,7 +22,7 @@ export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {}
 
   @Post()
-  @Roles(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.MAINTAINER)
+  @Roles(UserRole.SUPER_ADMIN)
   create(@Body() createCategoryDto: CreateCategoryDto, @Request() req) {
     const currentUser = req.user;
     const userAgent = req.headers['user-agent'];
@@ -62,7 +62,7 @@ export class CategoriesController {
   }
 
   @Delete(':id')
-  @Roles(UserRole.SUPER_ADMIN, UserRole.MAINTAINER, UserRole.ADMIN)
+  @Roles(UserRole.SUPER_ADMIN)
   remove(@Param('id') id: string, @Request() req) {
     const currentUser = req.user;
     const userAgent = req.headers['user-agent']; 
