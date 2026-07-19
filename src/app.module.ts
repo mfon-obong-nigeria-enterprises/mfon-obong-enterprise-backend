@@ -20,6 +20,7 @@ import { HealthModule } from './modules/health/health.module';
 import { WebSocketModule } from './modules/websocket/websocket.module';
 import { jwtConfig } from './config/configuration';
 import { NotificationsModule } from './modules/notifications/notifications.module';
+import { WarehouseModule } from './modules/warehouse/warehouse.module';
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import { NotificationsModule } from './modules/notifications/notifications.modul
     HealthModule,
     WebSocketModule,
     NotificationsModule,
+    WarehouseModule,
   ],
   controllers: [AppController],
   providers: [AppService],

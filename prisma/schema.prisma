@@ -38,6 +38,7 @@ model User {
   maintenanceDeactivated  MaintenanceMode[]   @relation("DeactivatedBy")
   sessionManagements      SessionManagement[]
   branchNotifications     BranchNotification[]
+  stockTransfers          StockTransfer[]
 }
 
 model Branch {
@@ -65,7 +66,8 @@ model Category {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 
-  products Product[]
+  products          Product[]
+  warehouseProducts WarehouseProduct[]
 }
 
 model Product {
@@ -88,8 +90,10 @@ model Product {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
-  transactionItems TransactionItem[]
-  variants         ProductVariant[]
+  warehouseProductId   String?
+  warehouseProductRef  WarehouseProduct? @relation(fields: [warehouseProductId], references: [id])
+  transactionItems     TransactionItem[]
+  variants             ProductVariant[]
 
   @@unique([name, branchId])
 }
@@ -106,7 +110,74 @@ model ProductVariant {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
-  transactionItems TransactionItem[]
+  warehouseProductVariantId   String?
+  warehouseProductVariantRef  WarehouseProductVariant? @relation(fields: [warehouseProductVariantId], references: [id])
+  transactionItems            TransactionItem[]
+}
+
+model Warehouse {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  address     String?
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  products  WarehouseProduct[]
+  transfers StockTransfer[]
+}
+
+model WarehouseProduct {
+  id            String    @id @default(cuid())
+  warehouseId   String
+  warehouseRef  Warehouse @relation(fields: [warehouseId], references: [id])
+  categoryId    String
+  categoryRef   Category  @relation(fields: [categoryId], references: [id])
+  name          String
+  unit          String
+  hasVariants   Boolean   @default(false)
+  stock         Float     @default(0)
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  variants       WarehouseProductVariant[]
+  branchProducts Product[]
+  transfers      StockTransfer[]
+
+  @@unique([name, warehouseId])
+}
+
+model WarehouseProductVariant {
+  id                  String           @id @default(cuid())
+  warehouseProductId  String
+  warehouseProductRef WarehouseProduct @relation(fields: [warehouseProductId], references: [id], onDelete: Cascade)
+  name                String
+  stock               Float            @default(0)
+  isActive            Boolean          @default(true)
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @updatedAt
+
+  branchVariants ProductVariant[]
+  transfers      StockTransfer[]
+
+  @@unique([name, warehouseProductId])
+}
+
+model StockTransfer {
+  id                          String                   @id @default(cuid())
+  warehouseId                 String
+  warehouseRef                Warehouse                @relation(fields: [warehouseId], references: [id])
+  branchId                    String
+  warehouseProductId          String
+  warehouseProductRef         WarehouseProduct         @relation(fields: [warehouseProductId], references: [id])
+  warehouseProductVariantId   String?
+  warehouseProductVariantRef  WarehouseProductVariant? @relation(fields: [warehouseProductVariantId], references: [id])
+  quantity                    Float
+  performedById               String
+  performedByRef              User                     @relation(fields: [performedById], references: [id])
+  notes                       String?
+  createdAt                   DateTime                 @default(now())
 }
 
 model Client {

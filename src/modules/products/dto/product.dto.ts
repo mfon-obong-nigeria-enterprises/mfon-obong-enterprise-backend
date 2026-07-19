@@ -27,6 +27,10 @@ export class CreateVariantDto {
   @IsNumber()
   @Min(0)
   minStockLevel: number;
+
+  @IsOptional()
+  @IsString()
+  warehouseProductVariantId?: string;
 }
 
 export class UpdateVariantDto {
@@ -117,6 +121,10 @@ export class CreateProductDto {
   @ValidateNested({ each: true })
   @Type(() => CreateVariantDto)
   variants?: CreateVariantDto[];
+
+  @IsOptional()
+  @IsString()
+  warehouseProductId?: string;
 }
 
 export class UpdateProductDto {
