@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.5.0](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/compare/v1.4.0...v1.5.0) (2026-07-19)
+
+
+### Features
+
+* warehouse module and other backend fixes ([dce0883](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/commit/dce0883ab7c1b46c9e21ea1e861c2d11dc4eb756))
+* warehouse module and other backend fixes ([d583771](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/commit/d583771993a50b3e1a92333f0c78e33f47ac01a5))
+
 ## [1.4.0](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/compare/v1.3.6...v1.4.0) (2026-07-18)
 
 
