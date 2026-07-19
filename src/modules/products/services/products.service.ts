@@ -99,12 +99,14 @@ export class ProductsService {
         subUnit: createProductDto.subUnit ?? null,
         branchId,
         priceHistory: hasVariants ? [] : [{ price: createProductDto.unitPrice ?? 0, date: new Date() }],
+        warehouseProductId: createProductDto.warehouseProductId ?? null,
         variants: hasVariants && createProductDto.variants?.length
           ? { create: createProductDto.variants.map(v => ({
               name: v.name,
               unitPrice: v.unitPrice,
               stock: v.stock,
               minStockLevel: v.minStockLevel,
+              warehouseProductVariantId: v.warehouseProductVariantId ?? null,
             })) }
           : undefined,
       },
@@ -410,8 +412,33 @@ export class ProductsService {
     const product = await this.prisma.product.findFirst({ where: { id: productId } });
     if (!product) throw new NotFoundException('Product not found');
 
+    if (product.warehouseProductId) {
+      if (!dto.warehouseProductVariantId) {
+        throw new BadRequestException('warehouseProductVariantId is required — select a grade from the warehouse list');
+      }
+      const warehouseVariant = await this.prisma.warehouseProductVariant.findFirst({
+        where: { id: dto.warehouseProductVariantId, warehouseProductId: product.warehouseProductId },
+      });
+      if (!warehouseVariant) {
+        throw new BadRequestException('That grade does not exist in the linked warehouse product');
+      }
+      const duplicate = await this.prisma.productVariant.findFirst({
+        where: { productId, warehouseProductVariantId: dto.warehouseProductVariantId, isActive: true },
+      });
+      if (duplicate) {
+        throw new BadRequestException(`Grade "${warehouseVariant.name}" is already added to this product`);
+      }
+    }
+
     const variant = await this.prisma.productVariant.create({
-      data: { productId, name: dto.name, unitPrice: dto.unitPrice, stock: dto.stock, minStockLevel: dto.minStockLevel },
+      data: {
+        productId,
+        name: dto.name,
+        unitPrice: dto.unitPrice,
+        stock: dto.stock,
+        minStockLevel: dto.minStockLevel,
+        warehouseProductVariantId: dto.warehouseProductVariantId ?? null,
+      },
     });
 
     if (!product.hasVariants) {
