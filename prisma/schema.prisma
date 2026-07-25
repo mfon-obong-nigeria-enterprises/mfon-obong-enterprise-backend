@@ -80,9 +80,10 @@ model Product {
   stock         Float     @default(0)
   minStockLevel Float     @default(0)
   hasVariants      Boolean   @default(false)
-  isBundleProduct  Boolean   @default(false)
-  bundleSize       Float?
-  subUnit          String?
+  isBundleProduct     Boolean   @default(false)
+  bundleSize          Float?
+  subUnit             String?
+  subUnitIsSellUnit   Boolean   @default(false)
   isActive         Boolean   @default(true)
   priceHistory     Json      @default("[]")
   branchId         String
@@ -257,9 +258,10 @@ model TransactionItem {
   originalUnitPrice Float?
   currentUnitPrice  Float?
   refundUnitPrice   Float?
-  bundlesQty        Float?
-  kgQty             Float?
-  subUnit           String?
+  bundlesQty          Float?
+  kgQty               Float?
+  subUnit             String?
+  subUnitIsSellUnit   Boolean @default(false)
 }
 
 model ExtraCharge {

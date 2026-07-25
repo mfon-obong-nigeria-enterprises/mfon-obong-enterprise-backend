@@ -117,6 +117,10 @@ export class CreateProductDto {
   subUnit?: string;
 
   @IsOptional()
+  @IsBoolean()
+  subUnitIsSellUnit?: boolean;
+
+  @IsOptional()
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => CreateVariantDto)
@@ -175,6 +179,10 @@ export class UpdateProductDto {
   @IsOptional()
   @IsString()
   subUnit?: string;
+
+  @IsOptional()
+  @IsBoolean()
+  subUnitIsSellUnit?: boolean;
 }
 
 export enum StockOperation {
