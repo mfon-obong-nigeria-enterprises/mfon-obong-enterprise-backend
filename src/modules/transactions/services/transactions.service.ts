@@ -210,6 +210,7 @@ export class TransactionsService {
             bundlesQty: item.bundlesQty ?? null,
             kgQty: item.kgQty ?? null,
             subUnit: product.subUnit ?? null,
+            subUnitIsSellUnit: product.subUnitIsSellUnit ?? false,
           };
         }),
       );
@@ -288,6 +289,7 @@ export class TransactionsService {
                 bundlesQty: item.bundlesQty ?? null,
                 kgQty: item.kgQty ?? null,
                 subUnit: item.subUnit ?? null,
+                subUnitIsSellUnit: item.subUnitIsSellUnit ?? false,
               })),
             },
             extraCharges: extraCharges.length > 0
@@ -748,7 +750,7 @@ export class TransactionsService {
     const transactions = await this.prisma.transaction.findMany({
       where,
       include: this.transactionInclude,
-      orderBy: { date: 'desc' },
+      orderBy: { createdAt: 'desc' },
     });
 
     return transactions.map((t) => this.transformTransaction(t));
@@ -767,7 +769,7 @@ export class TransactionsService {
     const transactions = await this.prisma.transaction.findMany({
       where: { branchId },
       include: this.transactionInclude,
-      orderBy: { date: 'desc' },
+      orderBy: { createdAt: 'desc' },
     });
     return transactions.map((t) => this.transformTransaction(t));
   }
@@ -776,7 +778,7 @@ export class TransactionsService {
     const transactions = await this.prisma.transaction.findMany({
       where: { userId },
       include: this.transactionInclude,
-      orderBy: { date: 'desc' },
+      orderBy: { createdAt: 'desc' },
     });
     return transactions.map((t) => this.transformTransaction(t));
   }
@@ -785,7 +787,7 @@ export class TransactionsService {
     const transactions = await this.prisma.transaction.findMany({
       where: { clientId },
       include: this.transactionInclude,
-      orderBy: { date: 'desc' },
+      orderBy: { createdAt: 'desc' },
     });
     return transactions.map((t) => this.transformTransaction(t));
   }
@@ -1149,7 +1151,7 @@ export class TransactionsService {
     const recentTransactions = await this.prisma.transaction.findMany({
       where,
       include: this.transactionInclude,
-      orderBy: { date: 'desc' },
+      orderBy: { createdAt: 'desc' },
       take: 10,
     });
 

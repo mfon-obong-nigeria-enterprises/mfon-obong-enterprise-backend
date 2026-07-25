@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.6.0](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/compare/v1.5.0...v1.6.0) (2026-07-25)
+
+
+### Features
+
+* toggle function to choose to treat sub-unit as unit or not ([173f8c4](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/commit/173f8c4a251eced8fb7ce310dcf3f834baf29289))
+* toggle function to choose to treat sub-unit as unit or not ([d8a2eeb](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/commit/d8a2eebe9ad30344501ce270891c85f7310c8d85))
+
 ## [1.5.0](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/compare/v1.4.0...v1.5.0) (2026-07-19)
 
 
