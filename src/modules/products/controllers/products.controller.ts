@@ -132,7 +132,7 @@ export class ProductsController {
   }
 
   @Delete(':id')
-  @Roles(UserRole.SUPER_ADMIN, UserRole.MAINTAINER)
+  @Roles(UserRole.SUPER_ADMIN, UserRole.MAINTAINER, UserRole.ADMIN)
   async remove(@Param('id') id: string, @Request() req): Promise<void> {
     const device = extractDeviceInfo(req.get('user-agent'));
     return this.productsService.remove(id, req.user, device);
