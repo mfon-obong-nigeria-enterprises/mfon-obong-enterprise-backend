@@ -1,5 +1,62 @@
 # Changelog
 
+## [1.6.1](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/compare/v1.6.0...v1.6.1) (2026-07-26)
+
+
+### Bug Fixes
+
+* cleared balance ([89ca8fa](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/commit/89ca8fa6e9896b3cb83108928156e40c4216a1f4))
+* cleared balance ([eeeff7d](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/commit/eeeff7dd1a3a3f7de461e90021bff6c4fbdfad83))
+
+## [1.6.0](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/compare/v1.5.0...v1.6.0) (2026-07-25)
+
+
+### Features
+
+* toggle function to choose to treat sub-unit as unit or not ([173f8c4](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/commit/173f8c4a251eced8fb7ce310dcf3f834baf29289))
+* toggle function to choose to treat sub-unit as unit or not ([d8a2eeb](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/commit/d8a2eebe9ad30344501ce270891c85f7310c8d85))
+
+## [1.5.0](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/compare/v1.4.0...v1.5.0) (2026-07-19)
+
+
+### Features
+
+* warehouse module and other backend fixes ([dce0883](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/commit/dce0883ab7c1b46c9e21ea1e861c2d11dc4eb756))
+* warehouse module and other backend fixes ([d583771](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/commit/d583771993a50b3e1a92333f0c78e33f47ac01a5))
+
+## [1.4.0](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/compare/v1.3.6...v1.4.0) (2026-07-18)
+
+
+### Features
+
+* added balance and date to client registration ([6c0bce5](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/commit/6c0bce54d99dc664ce2828a1e0af4c70eb95d820))
+* bundle product schema and API support ([fd3021e](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/commit/fd3021eb6dc5f2608e63a25dc13c2df186b3287b))
+* modify the inventory logic for products with multiple grades and also products with sub-units ([b80e1a4](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/commit/b80e1a4bd3f0b51d7a7cb539bea7325c668663fc))
+* product variant ([4a27c9f](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/commit/4a27c9f957998e879f205115d2582fc5af5fde83))
+
+## [1.3.6](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/compare/v1.3.5...v1.3.6) (2026-07-07)
+
+
+### Bug Fixes
+
+* token invalidation and remove refresh token from activity logs ([ef6b2f9](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/commit/ef6b2f9184446ce654dfb1519416610e6cd8c0e2))
+* token invalidation and remove refresh token from activity logs ([c2d191c](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/commit/c2d191cb5d6aed5db123845912212f9cfbdabae8))
+
+## [1.3.5](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/compare/v1.3.4...v1.3.5) (2026-07-05)
+
+
+### Bug Fixes
+
+* mimetype validation ([471b7f1](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/commit/471b7f14756442b14f9e691387991ecca27aef68))
+* mimetype validation ([56f899e](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/commit/56f899e98733e410e9c797d29849a993098b3461))
+
+## [1.3.4](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/compare/v1.3.3...v1.3.4) (2026-07-04)
+
+
+### Bug Fixes
+
+* log all HTTP exceptions in GlobalExceptionFilter for Grafana visibility ([de27157](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/commit/de2715714ecec911de155bed4e09901b03ff29a9))
+
 ## [1.3.3](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/compare/v1.3.2...v1.3.3) (2026-07-04)
 
 
