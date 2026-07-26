@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.6.1](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/compare/v1.6.0...v1.6.1) (2026-07-26)
+
+
+### Bug Fixes
+
+* cleared balance ([89ca8fa](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/commit/89ca8fa6e9896b3cb83108928156e40c4216a1f4))
+* cleared balance ([eeeff7d](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/commit/eeeff7dd1a3a3f7de461e90021bff6c4fbdfad83))
+
 ## [1.6.0](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/compare/v1.5.0...v1.6.0) (2026-07-25)
 
 
