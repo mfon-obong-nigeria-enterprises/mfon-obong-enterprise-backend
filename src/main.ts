@@ -36,8 +36,8 @@ async function bootstrap() {
         // Staging frontend (Cloudflare Pages)
         'https://staging.mfonobongenterprise.com',
         // Backend self-references (CapRover health checks and internal calls)
-        'https://mfon-obong-backend-staging.mfonobongenterprise.com',
-        'https://mfon-obong-backend-production.mfonobongenterprise.com',
+        'https://backend-staging.mfonobongenterprise.com',
+        'https://backend-prod.mfonobongenterprise.com',
       ];
 
       // Allow Cloudflare Pages preview deployment URLs (*.pages.dev)
