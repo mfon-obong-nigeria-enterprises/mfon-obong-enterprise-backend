@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.2](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/compare/v1.6.1...v1.6.2) (2026-08-16)
+
+
+### Bug Fixes
+
+* update CORS origins to match new CapRover app names ([9030dcb](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/commit/9030dcb5d0d68c9ebeb94ff7ac97ff2a321c1eb4))
+
 ## [1.6.1](https://github.com/mfon-obong-nigeria-enterprises/mfon-obong-enterprise-backend/compare/v1.6.0...v1.6.1) (2026-07-26)
 
 
